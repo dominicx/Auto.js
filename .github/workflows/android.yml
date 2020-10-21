@@ -1,12 +1,23 @@
 name: Android CI
 
-on: [push]
-
+on:
+  release:
+    types: published
+  push:
+    branches:
+      - master
+    paths:
+      - '.config'
+#  schedule:
+#    - cron: 0 8 * * 5
+  watch:
+    types: started
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    if: github.event.repository.owner.id == github.event.sender.id
+    
     steps:
     - uses: actions/checkout@v1
     - name: set up JDK 1.8
